@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="de.nico.pushnotification.library">
+
+    <uses-permission android:name="de.nico.pushnotification.servicetester.permission.SUBSCRIBE_NOTIFICATION_CHANNEL" />
+    <uses-permission android:name="de.nico.pushnotification.servicetester.permission.RECEIVE_NOTIFICATION" />
+
+    <application>
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="de.nico.pushnotification.servicetester.permission.SEND_NOTIFICATION">
+            <intent-filter>
+                <action android:name="de.nico.pushnotification.library.action.SHOW_NOTIFICATION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
