@@ -6,6 +6,8 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Base64;
@@ -21,12 +23,21 @@ public class NotificationReceiver extends BroadcastReceiver {
     private static final String CONTENT_KEY = "content";
     private static final String ICON_KEY = "icon";
     private static final String URI_KEY = "uri";
+    private static final String ICON_META = "de.nico.pushnotification.library.default_notification_icon";
+    private static final String NOTIFICATION_CHANNEL_META = "de.nico.pushnotification.library.notification_channel";
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (ACTION_SHOW_NOTIFICATION.equals(intent.getAction())) {
             Log.i(TAG, "Receiving notification");
-            String channelId = context.getPackageName() + ".pushnotification";
+            ApplicationInfo ai;
+            try {
+                ai = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, "Cannot get application info");
+                return;
+            }
+            String channelId = getNotificationChannel(ai);
             context.getSystemService(NotificationManager.class).createNotificationChannel(
                     new NotificationChannel(
                             channelId,
@@ -39,7 +50,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                     context,
                     channelId
             ).setSmallIcon(
-                    context.getApplicationInfo().icon
+                    getSmallIcon(ai)
             ).setPriority(
                     NotificationCompat.PRIORITY_DEFAULT
             ).setContentTitle(
@@ -81,5 +92,24 @@ public class NotificationReceiver extends BroadcastReceiver {
                     builder.build()
             );
         }
+    }
+
+    private int getSmallIcon(ApplicationInfo ai) {
+        int icon = ai.metaData.getInt(ICON_META);
+        if (icon == 0) {
+            icon = ai.icon;
+            if (icon == 0) {
+                return android.R.drawable.sym_def_app_icon;
+            }
+        }
+        return icon;
+    }
+
+    private String getNotificationChannel(ApplicationInfo ai) {
+        String channel = ai.metaData.getString(NOTIFICATION_CHANNEL_META);
+        if (channel == null) {
+            return ai.packageName + ".pushnotification";
+        }
+        return channel;
     }
 }

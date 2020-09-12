@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">SimpleChannelSubscriber</string>
+    <string name="notification_channel" translatable="false">simplechannelsubscriberchannel</string>
 </resources>

@@ -18,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="de.nico.pushnotification.library.default_notification_icon"
+            android:resource="@drawable/ic_notification"/>
+
+        <meta-data
+            android:name="de.nico.pushnotification.library.notification_channel"
+            android:value="@string/notification_channel"/>
     </application>
 
 </manifest>

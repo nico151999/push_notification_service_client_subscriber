@@ -1,7 +1,6 @@
 package de.nico.simplechannelsubscriber;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.EditText;
 
@@ -16,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.subscribe).setOnClickListener((view) -> {
             ChannelSubscription cs = new ChannelSubscription.ChannelSubscriptionBuilder()
-                    .setChannel(((EditText) findViewById(R.id.topic)).getText().toString())
+                    .setChannel(((EditText) findViewById(R.id.channel)).getText().toString())
                     .build();
             cs.subscribe(this);
         });

@@ -9,8 +9,7 @@
         <receiver
             android:name=".NotificationReceiver"
             android:enabled="true"
-            android:exported="true"
-            android:permission="de.nico.pushnotification.servicetester.permission.SEND_NOTIFICATION">
+            android:exported="true">
             <intent-filter>
                 <action android:name="de.nico.pushnotification.library.action.SHOW_NOTIFICATION" />
             </intent-filter>

@@ -6,7 +6,8 @@ import android.content.Intent;
 
 public class ChannelSubscription {
     private static final String PACKAGE_NAME = "de.nico.pushnotification.servicetester";
-    private static final String RECEIVER_CLASS = "ChannelSubscriptionReceiver";
+    private static final String RECEIVER_CLASS = "receiver.ChannelSubscriptionReceiver";
+    private static final String RECEIVER_PERMISSION = "de.nico.pushnotification.servicetester.permission.SEND_NOTIFICATION";
     private static final String SUBSCRIPTION_CHANNEL_KEY = "SUBSCRIPTION_CHANNEL_KEY";
     private static final String ACTION = "de.nico.pushnotification.servicetester.action.SUBSCRIBE_NOTIFICATION_CHANNEL";
     private static final String SUBSCRIPTION_PACKAGE_KEY = "SUBSCRIPTION_PACKAGE_KEY";
@@ -20,7 +21,8 @@ public class ChannelSubscription {
                         .setAction(ACTION)
                         .putExtra(SUBSCRIPTION_CHANNEL_KEY, mChannel)
                         .putExtra(SUBSCRIPTION_PACKAGE_KEY, context.getPackageName())
-                        .setComponent(component)
+                        .setComponent(component),
+                RECEIVER_PERMISSION
         );
     }
 
